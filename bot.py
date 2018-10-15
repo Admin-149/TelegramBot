@@ -8,20 +8,13 @@ params = ['Название компании', 'Описание ваканси�
           'Технологии', 'Офис или удаленка', 'Тип работы', 'Ссылка', 'Зарплатная вилка']
 
 
-def text_to_array(text):
-    num = 0
-    arr = text.split('\n')
-    new_arr = []
-    for line in arr:
-        if num % 2 == 0:
-            new_arr.append(line.strip(" "))
-        num = num + 1
-    return new_arr
+def split_text(text):
+    return text.split('\n===============\n')
 
 
 def generate_message(params, values):
     message = ''
-    for n in range(7):
+    for n in range(len(params)):
         message = message + params[n] + ': ' + values[n] + '\n'
     return message
 
@@ -31,7 +24,7 @@ app = Flask(__name__)
 
 @app.route('/post', methods=['POST'])
 def print_data():
-    values = text_to_array(request.data.decode('utf-8'))
+    values = split_text(request.data.decode('utf-8'))
     return generate_message(params, values)
 
 
