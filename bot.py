@@ -30,7 +30,10 @@ def print_hello():
 @app.route('/post', methods=['POST'])
 def print_data():
     values = split_text(request.data.decode('utf-8'))
-    return generate_message(params, values)
+    bot = telegram.Bot(BOT_KEY)
+    message = generate_message(params, values)
+    bot.send_message(chat_id=CHAT_ID, text=message)
+    return message
 
 
 if __name__ == '__main__':
