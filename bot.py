@@ -14,8 +14,8 @@ def split_text(text):
 
 def generate_message(params, values):
     message = ''
-    for n in range(len(params)):
-        message = message + params[n] + ': ' + values[n] + '\n'
+    for param, value in zip(params, values):
+        message = message + param + ': ' + value + '\n'
     return message
 
 
