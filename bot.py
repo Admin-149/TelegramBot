@@ -22,6 +22,11 @@ def generate_message(params, values):
 app = Flask(__name__)
 
 
+@app.route('/')
+def print_hello():
+    return "Test message"
+
+
 @app.route('/post', methods=['POST'])
 def print_data():
     values = split_text(request.data.decode('utf-8'))
