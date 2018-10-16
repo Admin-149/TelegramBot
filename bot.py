@@ -1,4 +1,5 @@
 import telegram
+import re
 from flask import Flask, request
 
 BOT_KEY = ''
@@ -12,9 +13,18 @@ def split_text(text):
     return text.split('\n===============\n')
 
 
+def add_hashtag(text):
+    regex = re.compile('\w+')
+    my_list = regex.findall(text)
+    hashtag_list = ["#" + x for x in my_list]
+    return ', '.join(hashtag_list)
+
+
 def generate_message(params, values):
     message = ''
     for param, value in zip(params, values):
+        if (param == 'Технологии' or param == 'Офис или удаленка' or param == 'Тип работы'):
+            value = add_hashtag(value)
         message = message + param + ': ' + value + '\n'
     return message
 
