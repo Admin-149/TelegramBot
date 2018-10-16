@@ -21,7 +21,7 @@ def add_hashtag(text):
 
 
 def generate_message(params, values):
-    message = ''
+    message = '#вакансия\n\n'
     for param, value in zip(params, values):
         if (param == 'Технологии' or param == 'Офис или удаленка' or param == 'Тип работы'):
             value = add_hashtag(value)
