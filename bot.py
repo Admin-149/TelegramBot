@@ -16,7 +16,7 @@ def split_text(text):
 def add_hashtag(text):
     regex = re.compile('\w+')
     my_list = regex.findall(text)
-    hashtag_list = ["#" + x for x in my_list]
+    hashtag_list = ["#" + word for word in my_list]
     return ', '.join(hashtag_list)
 
 
