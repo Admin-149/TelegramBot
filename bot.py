@@ -1,9 +1,12 @@
-import telegram
+import os
 import re
+
+import telegram
 from flask import Flask, request
 
-BOT_KEY = ''
-CHAT_ID = ''
+from dotenv import load_dotenv
+load_dotenv()
+
 
 params = ['Название компании', 'Описание вакансии',
           'Технологии', 'Офис или удаленка', 'Тип работы', 'Ссылка', 'Зарплатная вилка']
@@ -40,14 +43,11 @@ def print_hello():
 @app.route('/post', methods=['POST'])
 def print_data():
     values = split_text(request.data.decode('utf-8'))
-    bot = telegram.Bot(BOT_KEY)
+    bot = telegram.Bot(os.getenv('BOT_KEY'))
     message = generate_message(params, values)
-    bot.send_message(chat_id=CHAT_ID, text=message)
+    bot.send_message(chat_id=os.getenv('CHAT_ID'), text=message)
     return message
 
 
 if __name__ == '__main__':
     app.run()
-
-#bot = telegram.Bot(BOT_KEY)
-#bot.send_message(chat_id=CHAT_ID, text=message)
