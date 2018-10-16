@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import os
 import re
 
@@ -43,9 +44,10 @@ def print_hello():
 @app.route('/post', methods=['POST'])
 def print_data():
     values = split_text(request.data.decode('utf-8'))
-    bot = telegram.Bot(os.getenv('BOT_KEY'))
+    # bot = telegram.Bot(os.getenv('BOT_KEY'))
     message = generate_message(params, values)
-    bot.send_message(chat_id=os.getenv('CHAT_ID'), text=message)
+    print(message)
+    # bot.send_message(chat_id=os.getenv('CHAT_ID'), text=message)
     return message
 
 
