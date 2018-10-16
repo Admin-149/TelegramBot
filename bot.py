@@ -10,7 +10,7 @@ params = ['Название компании', 'Описание ваканси�
 
 
 def split_text(text):
-    return text.split('\n===============\n')
+    return re.split('[\n]*===============[\s]*\n', text)
 
 
 def add_hashtag(text):
@@ -23,9 +23,10 @@ def add_hashtag(text):
 def generate_message(params, values):
     message = '#вакансия\n\n'
     for param, value in zip(params, values):
-        if (param == 'Технологии' or param == 'Офис или удаленка' or param == 'Тип работы'):
-            value = add_hashtag(value)
-        message = message + param + ': ' + value + '\n'
+        if (value):
+            if (param == 'Технологии' or param == 'Офис или удаленка' or param == 'Тип работы'):
+                value = add_hashtag(value)
+            message = message + param + ': ' + value + '\n'
     return message
 
 
