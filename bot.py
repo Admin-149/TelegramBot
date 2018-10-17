@@ -1,33 +1,15 @@
-import telegram
+#!/usr/bin/env python
+import os
 import re
+from typing import List
+
+from dotenv import load_dotenv
 from flask import Flask, request
+import telegram
 
-BOT_KEY = ''
-CHAT_ID = ''
+from line_iterator import Lines
 
-params = ['Название компании', 'Описание вакансии',
-          'Технологии', 'Офис или удаленка', 'Тип работы', 'Ссылка', 'Зарплатная вилка']
-
-
-def split_text(text):
-    return re.split('[\n]*===============[\s]*\n', text)
-
-
-def add_hashtag(text):
-    regex = re.compile('\w+')
-    my_list = regex.findall(text)
-    hashtag_list = ["#" + word for word in my_list]
-    return ', '.join(hashtag_list)
-
-
-def generate_message(params, values):
-    message = '#вакансия\n\n'
-    for param, value in zip(params, values):
-        if (value):
-            if (param == 'Технологии' or param == 'Офис или удаленка' or param == 'Тип работы'):
-                value = add_hashtag(value)
-            message = message + param + ': ' + value + '\n'
-    return message
+load_dotenv()
 
 
 app = Flask(__name__)
@@ -40,15 +22,15 @@ def print_hello():
 
 @app.route('/post', methods=['POST'])
 def print_data():
+    def split_text(text: str) -> List[str]:
+        return [x.strip() for x in re.compile(r'=+').split(text)]
+
     values = split_text(request.data.decode('utf-8'))
-    bot = telegram.Bot(BOT_KEY)
-    message = generate_message(params, values)
-    bot.send_message(chat_id=CHAT_ID, text=message)
+    bot = telegram.Bot(os.getenv('BOT_KEY'))
+    message = '\n'.join([line for line in Lines(values)])
+    bot.send_message(chat_id=os.getenv('CHAT_ID'), text=message)
     return message
 
 
 if __name__ == '__main__':
     app.run()
-
-#bot = telegram.Bot(BOT_KEY)
-#bot.send_message(chat_id=CHAT_ID, text=message)
