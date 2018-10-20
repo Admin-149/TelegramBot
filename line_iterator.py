@@ -35,6 +35,6 @@ class Lines:
             return ', '.join([f"#{word}" for word in my_list])
 
         result = self.values[self.index]
-        if self.index in (2, 3, 4):
+        if self.index in (2, 3, 5):
             result = add_hashtag(result)
         return result
