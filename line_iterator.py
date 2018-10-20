@@ -3,7 +3,8 @@ from typing import List
 
 
 class Lines:
-    captions = ('Название компании', 'Описание вакансии', 'Технологии', 'Офис или удаленка', 'Тип работы', 'Ссылка', 'Зарплатная вилка')
+    captions = ('Название компании', 'Описание вакансии', 'Технологии',
+                'Офис или удаленка', 'Тип работы', 'Ссылка', 'Зарплатная вилка')
 
     def __init__(self, values: List[str]):
         self.values = values
@@ -11,12 +12,12 @@ class Lines:
 
     def __iter__(self):
         return self
-    
+
     def __next__(self) -> str:
         if len(self.captions) == self.index or len(self.values) == self.index:
             raise StopIteration
         if self.index == -1:
-            result = 'вакансия'
+            result = '#вакансия'
         else:
             value = self.value
             while value == '':  # skip empty lines
@@ -24,8 +25,8 @@ class Lines:
                 value = self.value
             result = f'{self.captions[self.index]}: {value}'
         self.index += 1
-        return result 
-    
+        return result
+
     @property
     def value(self) -> str:
         def add_hashtag(text: str) -> str:
