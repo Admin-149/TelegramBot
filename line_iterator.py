@@ -17,7 +17,7 @@ class Lines:
         if len(self.captions) == self.index or len(self.values) == self.index:
             raise StopIteration
         if self.index == -1:
-            result = '#вакансия'
+            result = '#вакансия\n'
         else:
             value = self.value
             while value == '':  # skip empty lines

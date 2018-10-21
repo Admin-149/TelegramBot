@@ -5,7 +5,7 @@ from line_iterator import Lines
 
 class TestLineIterator(unittest.TestCase):
     def test_with_url(self):
-        expection = """#вакансия
+        expection = """#вакансия\n
 Название компании: Test
 Описание вакансии: Long
 Технологии: #java, #js
@@ -20,7 +20,7 @@ class TestLineIterator(unittest.TestCase):
         self.assertEqual(result, expection)
 
     def test_without_url(self):
-        expection = """#вакансия
+        expection = """#вакансия\n
 Название компании: Test
 Описание вакансии: Long
 Технологии: #java, #js
