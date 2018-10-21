@@ -27,9 +27,23 @@ class TestLineIterator(unittest.TestCase):
 Офис или удаленка: #офис
 Адрес офиса: Moscovskaya
 Тип работы: #проектная, #стажировка
-Зарплатная вилка: 1000 => 2000"""
+Зарплатная вилка: от 1000 до 2000"""
         text = ['Test', 'Long', 'java, js', 'офис', 'Moscovskaya',
-                'проектная, стажировка', '', '1000 => 2000']
+                'проектная, стажировка', '', 'от 1000 до 2000']
+        result = '\n'.join(Lines(text))
+        self.assertEqual(result, expection)
+
+    def test_without_address(self):
+        expection = """#вакансия\n
+Название компании: Test
+Описание вакансии: Long
+Технологии: #java, #js
+Офис или удаленка: #офис
+Тип работы: #проектная, #стажировка
+Ссылка: https://ya.ru
+Зарплатная вилка: от 1000 до 2000"""
+        text = ['Test', 'Long', 'java, js', 'офис', '',
+                'проектная, стажировка', 'https://ya.ru', 'от 1000 до 2000']
         result = '\n'.join(Lines(text))
         self.assertEqual(result, expection)
 
