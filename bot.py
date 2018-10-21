@@ -22,13 +22,10 @@ def print_hello():
 
 @app.route('/post', methods=['POST'])
 def print_data():
-    def split_text(text: str) -> List[str]:
-        return [x.strip() for x in re.compile(r'=+').split(text)]
-
-    values = split_text(request.data.decode('utf-8'))
-    bot = telegram.Bot(os.getenv('BOT_KEY'))
-    message = '\n'.join([line for line in Lines(values)])
-    bot.send_message(chat_id=os.getenv('CHAT_ID'), text=message)
+    text = request.data.decode('utf-8')
+    #bot = telegram.Bot(os.getenv('BOT_KEY'))
+    message = '\n'.join([line for line in Lines(text)])
+    #bot.send_message(chat_id=os.getenv('CHAT_ID'), text=message)
     return message
 
 

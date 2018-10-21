@@ -2,12 +2,16 @@ import re
 from typing import List
 
 
+def split_text(text: str) -> List[str]:
+    return [x.strip() for x in re.compile(r'=+').split(text)]
+
+
 class Lines:
     captions = ('Название компании', 'Описание вакансии', 'Технологии',
                 'Офис или удаленка', 'Адрес офиса', 'Тип работы', 'Ссылка', 'Зарплатная вилка')
 
-    def __init__(self, values: List[str]):
-        self.values = values
+    def __init__(self, values: str):
+        self.values = split_text(values)
         self.index = -1
 
     def __iter__(self):
