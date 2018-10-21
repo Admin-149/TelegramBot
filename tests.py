@@ -14,8 +14,21 @@ class TestLineIterator(unittest.TestCase):
 Тип работы: #проектная, #стажировка
 Ссылка: https://ya.ru
 Зарплатная вилка: от 1000 до 2000"""
-        text = ['Test', 'Long', 'java, js', 'офис', 'Moscovskaya',
-                'проектная, стажировка', 'https://ya.ru', 'от 1000 до 2000']
+        text = """Test
+===============
+ Long
+===============
+ java, js
+===============
+ офис
+===============
+ Moscovskaya
+===============
+ проектная, стажировка
+===============
+  https://ya.ru
+===============
+ от 1000 до 2000"""
         result = '\n'.join(Lines(text))
         self.assertEqual(result, expection)
 
@@ -28,8 +41,20 @@ class TestLineIterator(unittest.TestCase):
 Адрес офиса: Moscovskaya
 Тип работы: #проектная, #стажировка
 Зарплатная вилка: от 1000 до 2000"""
-        text = ['Test', 'Long', 'java, js', 'офис', 'Moscovskaya',
-                'проектная, стажировка', '', 'от 1000 до 2000']
+        text = """Test
+===============
+ Long
+===============
+ java, js
+===============
+ офис
+===============
+ Moscovskaya
+===============
+ проектная, стажировка
+===============
+===============
+ от 1000 до 2000"""
         result = '\n'.join(Lines(text))
         self.assertEqual(result, expection)
 
@@ -42,8 +67,20 @@ class TestLineIterator(unittest.TestCase):
 Тип работы: #проектная, #стажировка
 Ссылка: https://ya.ru
 Зарплатная вилка: от 1000 до 2000"""
-        text = ['Test', 'Long', 'java, js', 'офис', '',
-                'проектная, стажировка', 'https://ya.ru', 'от 1000 до 2000']
+        text = """Test
+===============
+ Long
+===============
+ java, js
+===============
+ офис
+===============
+===============
+ проектная, стажировка
+===============
+  https://ya.ru
+===============
+ от 1000 до 2000"""
         result = '\n'.join(Lines(text))
         self.assertEqual(result, expection)
 
