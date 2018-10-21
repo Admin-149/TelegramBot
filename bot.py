@@ -23,9 +23,9 @@ def print_hello():
 @app.route('/post', methods=['POST'])
 def print_data():
     text = request.data.decode('utf-8')
-    #bot = telegram.Bot(os.getenv('BOT_KEY'))
+    bot = telegram.Bot(os.getenv('BOT_KEY'))
     message = '\n'.join([line for line in Lines(text)])
-    #bot.send_message(chat_id=os.getenv('CHAT_ID'), text=message)
+    bot.send_message(chat_id=os.getenv('CHAT_ID'), text=message)
     return message
 
 
