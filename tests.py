@@ -13,7 +13,8 @@ class TestLineIterator(unittest.TestCase):
 Адрес офиса: Moscovskaya
 Тип работы: #проектная, #стажировка
 Ссылка: https://ya.ru
-Зарплатная вилка: от 1000 до 2000"""
+Зарплатная вилка: от 1000 до 2000
+Контакты: example@inc.com"""
         text = """Test
 ===============
  Long
@@ -28,7 +29,9 @@ class TestLineIterator(unittest.TestCase):
 ===============
   https://ya.ru
 ===============
- от 1000 до 2000"""
+ от 1000 до 2000
+===============
+ example@inc.com"""
         result = '\n'.join(Lines(text))
         self.assertEqual(result, expection)
 
@@ -40,7 +43,8 @@ class TestLineIterator(unittest.TestCase):
 Офис или удаленка: #офис
 Адрес офиса: Moscovskaya
 Тип работы: #проектная, #стажировка
-Зарплатная вилка: от 1000 до 2000"""
+Зарплатная вилка: от 1000 до 2000
+Контакты: example@inc.com"""
         text = """Test
 ===============
  Long
@@ -54,7 +58,9 @@ class TestLineIterator(unittest.TestCase):
  проектная, стажировка
 ===============
 ===============
- от 1000 до 2000"""
+ от 1000 до 2000
+===============
+ example@inc.com"""
         result = '\n'.join(Lines(text))
         self.assertEqual(result, expection)
 
@@ -66,7 +72,8 @@ class TestLineIterator(unittest.TestCase):
 Офис или удаленка: #офис
 Тип работы: #проектная, #стажировка
 Ссылка: https://ya.ru
-Зарплатная вилка: от 1000 до 2000"""
+Зарплатная вилка: от 1000 до 2000
+Контакты: example@inc.com"""
         text = """Test
 ===============
  Long
@@ -80,7 +87,40 @@ class TestLineIterator(unittest.TestCase):
 ===============
   https://ya.ru
 ===============
- от 1000 до 2000"""
+ от 1000 до 2000
+===============
+ example@inc.com"""
+        result = '\n'.join(Lines(text))
+        self.assertEqual(result, expection)
+
+    def test_with_all_data(self):
+        expection = """#вакансия\n
+Название компании: Test
+Описание вакансии: Long
+Технологии: #java, #js
+Офис или удаленка: #офис
+Адрес офиса: Moscovskaya
+Тип работы: #проектная, #стажировка
+Ссылка: https://ya.ru
+Зарплатная вилка: от 1000 до 2000
+Контакты: example@inc.com"""
+        text = """Test
+===============
+ Long
+===============
+ java, js
+===============
+ офис
+===============
+ Moscovskaya
+===============
+ проектная, стажировка
+===============
+  https://ya.ru
+===============
+ от 1000 до 2000
+===============
+ example@inc.com"""
         result = '\n'.join(Lines(text))
         self.assertEqual(result, expection)
 
