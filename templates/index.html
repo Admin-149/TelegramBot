@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Микроблог {{ title }}</title>
+  </head>
+  <body>
+    <h1>Анкета для вакансии</h1>
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+    <form action="" method="POST" novalidate>
+      {{ form.hidden_tag() }}
+      <p>
+        {{ form.name.label }}<br />
+        {{ form.name(size=32) }}<br />
+        {% for error in form.name.errors %}
+        <span style="color: red;">[{{ error }}]</span> {% endfor %}
+      </p>
+      <p>
+        {{ form.description.label }}<br />
+        {{ form.description }}<br />
+        {% for error in form.description.errors %}
+        <span style="color: red;">[{{ error }}]</span> {% endfor %}
+      </p>
+      <p>
+        {{ form.skills.label }}<br />
+        {{ form.skills(size=32) }}<br />
+        {% for error in form.skills.errors %}
+        <span style="color: red;">[{{ error }}]</span> {% endfor %}
+      </p>
+      <p>
+        {{ form.job_format.label }}<br />
+        {{ form.job_format }}<br />
+        {% for error in form.job_format.errors %}
+        <span style="color: red;">[{{ error }}]</span> {% endfor %}
+      </p>
+      <p>{{ form.submit }}</p>
+    </form>
+  </body>
+</html>

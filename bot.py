@@ -4,20 +4,29 @@ import re
 from typing import List
 
 from dotenv import load_dotenv
-from flask import Flask, request
+from flask import Flask, request, render_template, flash, redirect
+from config import Config
 import telegram
 
 from line_iterator import Lines
+from form import LoginForm
 
 load_dotenv()
 
 
 app = Flask(__name__)
+app.config.from_object(Config)
 
 
-@app.route('/')
-def print_hello():
-    return "Test message"
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    form = LoginForm()
+    if form.validate_on_submit():
+        flash('Login requested for user {}, remember_me={}'.format(
+            form.username.data, form.remember_me.data
+        ))
+        return redirect('/')
+    return render_template('index.html', title='Sign In', form=form)
 
 
 @app.route('/post', methods=['POST'])
