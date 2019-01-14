@@ -11,15 +11,43 @@ class App extends React.Component {
     link: "",
     address: "",
     from: "",
-    to: ""
+    to: "",
+    contacts: ""
   };
 
   handleSubmit = event => {
-    //return axios.post("/post/vacancy", this.state);
-    event.preventDefault();
-    event.stopPropagation();
-    console.log(this.state);
+    return axios.post("/post", this.state);
   };
+
+  transformToString(state) {
+    let divider = "\n===============\n";
+    let skills = state.skills.split(" ").join(", ");
+    let salary = `от ${state.from} до ${state.to}`;
+    let employment = Object.keys(state.employment)
+      .filter(key => {
+        return state.employment[key];
+      })
+      .map(key => state.employment[key])
+      .join(", ");
+    let message =
+      state.name +
+      divider +
+      state.description +
+      divider +
+      skills +
+      divider +
+      state.format +
+      divider +
+      (state.address ? state.address + divider : divider) +
+      employment +
+      divider +
+      (state.link ? state.link + divider : divider) +
+      salary +
+      divider +
+      state.contacts;
+
+    return message;
+  }
 
   handleChange = name => event => {
     this.setState({
@@ -96,9 +124,9 @@ class App extends React.Component {
               id="format"
               onChange={this.handleChange("format")}
             >
-              <option value="none">--</option>
-              <option value="office">офис</option>
-              <option value="remote">удаленка</option>
+              <option value="">--</option>
+              <option value="офис">офис</option>
+              <option value="удаленка">удаленка</option>
             </select>
           </div>
 

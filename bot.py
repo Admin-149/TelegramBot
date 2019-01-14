@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 import os
 import re
+import sys
 from typing import List
 
 from dotenv import load_dotenv
-from flask import Flask, request
+from flask import Flask, request, render_template
 import telegram
 
 from line_iterator import Lines
@@ -12,12 +13,13 @@ from line_iterator import Lines
 load_dotenv()
 
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="./client/build",
+            static_folder="./client/build/static")
 
 
 @app.route('/')
-def print_hello():
-    return "Test message"
+def root():
+    return render_template('index.html')
 
 
 @app.route('/post', methods=['POST'])
