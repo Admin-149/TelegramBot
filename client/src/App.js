@@ -17,7 +17,9 @@ class App extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    return axios.post("/post", this.transformToString(this.state));
+    return axios.post("/post", this.transformToString(this.state), {
+      headers: { "Content-Type": "text/plain" }
+    });
   };
 
   transformToString(state) {
@@ -28,7 +30,21 @@ class App extends React.Component {
       .filter(key => {
         return state.employment[key];
       })
-      .map(key => state.employment[key])
+      // eslint-disable-next-line array-callback-return
+      .map(key => {
+        switch (key) {
+          case "full":
+            return "полная";
+          case "part":
+            return "частичная";
+          case "project":
+            return "проектная";
+          case "training":
+            return "стажировка";
+          default:
+            break;
+        }
+      })
       .join(", ");
     let message =
       state.name +
@@ -133,7 +149,7 @@ class App extends React.Component {
 
           <div className="form-group" required>
             <label className="col-form-label">Занятость</label>
-            <div className="form-check">
+            <div className="form-check" required>
               <input
                 className="form-check-input"
                 type="checkbox"
