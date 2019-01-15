@@ -13,8 +13,7 @@ from line_iterator import Lines
 load_dotenv()
 
 
-app = Flask(__name__, template_folder="./client/build",
-            static_folder="./client/build/static")
+app = Flask(__name__)
 
 
 @app.route('/')
