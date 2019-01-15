@@ -16,7 +16,7 @@ class App extends React.Component {
   };
 
   handleSubmit = event => {
-    return axios.post("/post", this.state);
+    return axios.post("/post", this.transformToString(this.state));
   };
 
   transformToString(state) {
