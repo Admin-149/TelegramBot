@@ -16,6 +16,7 @@ class App extends React.Component {
   };
 
   handleSubmit = event => {
+    event.preventDefault();
     return axios.post("/post", this.transformToString(this.state));
   };
 
