@@ -17,7 +17,7 @@ class App extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    return axios.post("/post", this.transformToString(this.state), {
+    return axios.post("/test", this.transformToString(this.state), {
       headers: { "Content-Type": "text/plain" }
     });
   };
@@ -46,22 +46,17 @@ class App extends React.Component {
         }
       })
       .join(", ");
-    let message =
-      state.name +
-      divider +
-      state.description +
-      divider +
-      skills +
-      divider +
-      state.format +
-      divider +
-      (state.address ? state.address + divider : divider) +
-      employment +
-      divider +
-      (state.link ? state.link + divider : divider) +
-      salary +
-      divider +
-      state.contacts;
+    let message = [
+      state.name,
+      state.description,
+      skills,
+      state.format,
+      state.address,
+      employment,
+      state.link,
+      salary,
+      state.contacts
+    ].join(divider);
 
     return message;
   }
@@ -87,21 +82,25 @@ class App extends React.Component {
         <h1 className="title">Анкета на вакансию</h1>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group row">
-            <label className="col-sm-3 col-form-label" htmlFor="name">
+            <label className="col-sm-3 col-form-label" htmlFor="name" required>
               Название компании
             </label>
-            <input
-              type="text"
-              className="form-control col-sm-9"
-              id="name"
-              required
-              onChange={this.handleChange("name")}
-              value={this.state.name}
-            />
+            <div className="col-sm-9">
+              <input
+                type="text"
+                className="form-control"
+                id="name"
+                required
+                onChange={this.handleChange("name")}
+                value={this.state.name}
+              />
+            </div>
           </div>
 
           <div className="form-group">
-            <label htmlFor="description">Описание вакансии</label>
+            <label htmlFor="description" required>
+              Описание вакансии
+            </label>
             <textarea
               className="form-control"
               id="description"
@@ -113,7 +112,11 @@ class App extends React.Component {
           </div>
 
           <div className="form-group row">
-            <label className="col-sm-3 col-form-label" htmlFor="skills">
+            <label
+              className="col-sm-3 col-form-label"
+              htmlFor="skills"
+              required
+            >
               Технологии
             </label>
             <div className="col-sm-9 d-flex flex-column">
@@ -148,7 +151,9 @@ class App extends React.Component {
           </div>
 
           <div className="form-group" required>
-            <label className="col-form-label">Занятость</label>
+            <label className="col-form-label" required>
+              Занятость
+            </label>
             <div className="form-check" required>
               <input
                 className="form-check-input"
@@ -207,31 +212,35 @@ class App extends React.Component {
             <label className="col-sm-3 col-form-label" htmlFor="link">
               Ссылка на вакансию
             </label>
-            <input
-              type="text"
-              className="form-control col-sm-9"
-              id="link"
-              onChange={this.handleChange("link")}
-            />
+            <div className="col-sm-9">
+              <input
+                type="text"
+                className="form-control"
+                id="link"
+                onChange={this.handleChange("link")}
+              />
+            </div>
           </div>
 
           <div className="form-group row">
             <label className="col-sm-3 col-form-label" htmlFor="address">
               Адрес офиса
             </label>
-            <input
-              type="text"
-              className="form-control col-sm-9"
-              id="address"
-              onChange={this.handleChange("address")}
-            />
+            <div className="col-sm-9">
+              <input
+                type="text"
+                className="form-control"
+                id="address"
+                onChange={this.handleChange("address")}
+              />
+            </div>
           </div>
 
           <div className="form-group">
             <label className="col-form-label">Зарплатная вилка</label>
           </div>
           <div className="form-group row">
-            <label className="col-sm-3 col-form-label" htmlFor="from">
+            <label className="col-sm-3 col-form-label" htmlFor="from" required>
               от
             </label>
 
@@ -247,7 +256,7 @@ class App extends React.Component {
             </div>
           </div>
           <div className="form-group row">
-            <label className="col-sm-3 col-form-label" htmlFor="to">
+            <label className="col-sm-3 col-form-label" htmlFor="to" required>
               до
             </label>
             <div className="col-sm-9 d-flex flex-column">
@@ -266,13 +275,15 @@ class App extends React.Component {
             <label className="col-sm-3 col-form-label" htmlFor="contacts">
               Контакты
             </label>
-            <input
-              type="text"
-              className="form-control col-sm-9"
-              id="contacts"
-              required
-              onChange={this.handleChange("contacts")}
-            />
+            <div className="col-sm-9">
+              <input
+                type="text"
+                className="form-control "
+                id="contacts"
+                required
+                onChange={this.handleChange("contacts")}
+              />
+            </div>
           </div>
 
           <div className="submit-button d-flex justify-content-center">
