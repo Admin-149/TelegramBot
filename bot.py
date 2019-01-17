@@ -16,12 +16,12 @@ load_dotenv()
 app = Flask(__name__)
 
 
-def print_data(chat_id: str):
+def print_data_test():
     text = request.data.decode('utf-8')
     print(text, file=sys.stderr)
     bot = telegram.Bot(os.getenv('BOT_KEY'))
     message = '\n'.join([line for line in Lines(text)])
-    for chat_id in os.getenv(chat_id).replace(',', ' ').split():
+    for chat_id in os.getenv('TEST_CHAT_ID').replace(',', ' ').split():
         bot.send_message(chat_id, text=message)
     return message
 
@@ -32,11 +32,26 @@ def root():
 
 
 @app.route('/test', methods=['POST'])
-print_data('TEST_CHAT_ID')
+def print_data_test():
+    text = request.data.decode('utf-8')
+    print(text, file=sys.stderr)
+    bot = telegram.Bot(os.getenv('BOT_KEY'))
+    message = '\n'.join([line for line in Lines(text)])
+    for chat_id in os.getenv('TEST_CHAT_ID').replace(',', ' ').split():
+        bot.send_message(chat_id, text=message)
+    return message
 
 
 @app.route('/post', methods=['POST'])
-print_data('CHAT_ID')
+def print_data():
+    text = request.data.decode('utf-8')
+    print(text, file=sys.stderr)
+    bot = telegram.Bot(os.getenv('BOT_KEY'))
+    message = '\n'.join([line for line in Lines(text)])
+    for chat_id in os.getenv('CHAT_ID').replace(',', ' ').split():
+        bot.send_message(chat_id, text=message)
+    return message
+
 
 if __name__ == '__main__':
     app.run()
