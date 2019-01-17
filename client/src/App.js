@@ -272,7 +272,11 @@ class App extends React.Component {
           </div>
 
           <div className="form-group row">
-            <label className="col-sm-3 col-form-label" htmlFor="contacts">
+            <label
+              className="col-sm-3 col-form-label"
+              htmlFor="contacts"
+              required
+            >
               Контакты
             </label>
             <div className="col-sm-9">
