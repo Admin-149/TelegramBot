@@ -17,6 +17,7 @@ class App extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    console.log(this.transformToString(this.state));
     return axios.post("/test", this.transformToString(this.state), {
       headers: { "Content-Type": "text/plain" }
     });
@@ -50,10 +51,10 @@ class App extends React.Component {
       state.name,
       state.description,
       skills,
-      state.format,
-      state.address,
+      state.format ? state.format : null,
       employment,
-      state.link,
+      state.link ? state.link : null,
+      state.address ? state.address : null,
       salary,
       state.contacts
     ].join(divider);
