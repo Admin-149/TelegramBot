@@ -32,7 +32,7 @@ def print_data_test():
     return message
 
 
-@app.route('/post', methods=['POST'])
+""" @app.route('/post', methods=['POST'])
 def print_data():
     text = request.data.decode('utf-8')
     print(text, file=sys.stderr)
@@ -40,7 +40,7 @@ def print_data():
     message = '\n'.join([line for line in Lines(text)])
     for chat_id in os.getenv('CHAT_ID').replace(',', ' ').split():
         bot.send_message(chat_id, text=message)
-    return message
+    return message """
 
 
 if __name__ == '__main__':
