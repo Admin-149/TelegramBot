@@ -13,8 +13,7 @@ from line_iterator import Lines
 load_dotenv()
 
 
-app = Flask(__name__, template_folder='client/build',
-            static_folder='client/build/static')
+app = Flask(__name__)
 
 
 @app.route('/')
@@ -29,8 +28,8 @@ def print_data_test():
     bot = telegram.Bot(os.getenv('BOT_KEY'))
     message = '\n'.join([line for line in Lines(text)])
     for chat_id in os.getenv('TEST_CHAT_ID').replace(',', ' ').split():
-        send_message = bot.send_message(chat_id, text=message)
-    return send_message
+        bot.send_message(chat_id, text=message)
+    return message
 
 
 @app.route('/post', methods=['POST'])
