@@ -17,10 +17,12 @@ class App extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log(this.transformToString(this.state));
-    return axios.post("/test", this.transformToString(this.state), {
-      headers: { "Content-Type": "text/plain" }
-    });
+
+    return axios
+      .post("/test", this.transformToString(this.state), {
+        headers: { "Content-Type": "text/plain" }
+      })
+      .then(response => console.log(response));
   };
 
   transformToString(state) {

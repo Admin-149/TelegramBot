@@ -39,8 +39,8 @@ def print_data():
     bot = telegram.Bot(os.getenv('BOT_KEY'))
     message = '\n'.join([line for line in Lines(text)])
     for chat_id in os.getenv('CHAT_ID').replace(',', ' ').split():
-        bot.send_message(chat_id, text=message)
-    return message
+        send_message = bot.send_message(chat_id, text=message)
+    return send_message
 
 
 if __name__ == '__main__':
