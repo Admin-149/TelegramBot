@@ -52,7 +52,7 @@ class App extends React.Component {
         })
         .then(response => {
           console.log(response);
-          if (response.status === "OK") {
+          if (response.statusText === "OK") {
             this.setState({
               submit: true,
               loading: false
