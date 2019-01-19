@@ -32,6 +32,7 @@ class TestLineIterator(unittest.TestCase):
  от 1000 до 2000
 ===============
  example@inc.com"""
+
         result = '\n'.join(Lines(text))
         self.assertEqual(result, expection)
 
@@ -121,6 +122,37 @@ class TestLineIterator(unittest.TestCase):
  от 1000 до 2000
 ===============
  example@inc.com"""
+        result = '\n'.join(Lines(text))
+        self.assertEqual(result, expection)
+
+    def test_data_new_form(self):
+        expection = """#вакансия\n
+Название компании: test
+Описание вакансии: test
+Технологии: #test
+Офис или удаленка: #офис
+Адрес офиса: test
+Тип работы: #полная
+Ссылка: test
+Зарплатная вилка: от 1 до 2
+Контакты: 123"""
+        text = """test
+===============
+test
+===============
+test
+===============
+офис
+===============
+test
+===============
+полная
+===============
+test
+===============
+от 1 до 2
+===============
+123"""
         result = '\n'.join(Lines(text))
         self.assertEqual(result, expection)
 

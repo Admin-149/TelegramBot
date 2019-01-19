@@ -3,3 +3,5 @@ flask==1.0.2
 python-dotenv==0.9.1
 
 coverage==4.5.1
+
+gunicorn==19.9.0
