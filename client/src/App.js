@@ -96,9 +96,9 @@ class App extends React.Component {
       state.description,
       skills,
       state.format,
+      state.address,
       employment,
       state.link,
-      state.address,
       salary,
       state.contacts
     ].join(divider);
