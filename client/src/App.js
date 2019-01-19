@@ -51,7 +51,6 @@ class App extends React.Component {
           headers: { "Content-Type": "text/plain" }
         })
         .then(response => {
-          console.log(response);
           if (response.statusText === "OK") {
             this.setState({
               submit: true,
