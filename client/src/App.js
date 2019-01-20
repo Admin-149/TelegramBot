@@ -152,7 +152,7 @@ class App extends React.Component {
           <SubmitAlert
             open={this.state.submit}
             closeDialog={this.closeDialog}
-            text="Анкета опубликована в Krasnodar Dev Cereer"
+            text="Анкета опубликована в Krasnodar Dev Career"
           />
         )}
 
