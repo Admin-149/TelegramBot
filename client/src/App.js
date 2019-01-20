@@ -70,7 +70,7 @@ class App extends React.Component {
   transformToString(state) {
     let divider = "\n===============\n";
     let skills = state.skills.split(" ").join(", ");
-    let salary = `от ${state.from} до ${state.to}`;
+    let salary = `от ${state.from} до ${state.to} рублей`;
     let employment = Object.keys(state.employment)
       .filter(key => {
         return state.employment[key];
