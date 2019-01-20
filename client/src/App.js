@@ -47,7 +47,7 @@ class App extends React.Component {
 
     return this.setState({ loading: true }, () => {
       axios
-        .post("/test", this.transformToString(this.state), {
+        .post("/post", this.transformToString(this.state), {
           headers: { "Content-Type": "text/plain" }
         })
         .then(response => {
