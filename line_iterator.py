@@ -3,7 +3,7 @@ from typing import List
 
 
 def split_text(text: str) -> List[str]:
-    return [x.strip() for x in re.compile(r'=+').split(text)]
+    return [x.strip() for x in re.compile(r'===============').split(text)]
 
 
 class Lines:
