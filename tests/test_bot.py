@@ -21,6 +21,7 @@ class TestBotApp:
             return FakeBot()
 
         monkeypatch.setattr(telegram, 'Bot', get_patched)
+        monkeypatch.setenv('CHAT_ID', '12345')
         response = client.post(
             '/message', json={'name': 'Test',
                               'description': 'Long'}
