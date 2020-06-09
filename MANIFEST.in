@@ -1,0 +1,3 @@
+graft bot/static
+graft bot/templates
+global-exclude *.pyc

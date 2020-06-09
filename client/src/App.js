@@ -27,7 +27,7 @@ class App extends React.Component {
     this.state = {
       loading: false,
       submit: false,
-      error: false,
+      error: '',
       name: "",
       description: "",
       skills: "",
@@ -44,11 +44,25 @@ class App extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-
-    return this.setState({ loading: true }, () => {
+    const { name, description, skills, format, employment, link, address, from, to, contacts } = this.state;
+    const payload = {
+      name,
+      description,
+      skills: this.formToStringSkills(skills),
+      format,
+      employment: this.formToStringEmployment(employment),
+      link,
+      address,
+      salary: this.formToStringSalary(from, to),
+      contacts
+    }
+    return this.setState({
+      loading: true,
+      error: '',
+    }, () => {
       axios
-        .post("/post", this.transformToString(this.state), {
-          headers: { "Content-Type": "text/plain" }
+        .post("/post", payload, {
+          headers: { "Content-Type": "application/json" }
         })
         .then(response => {
           if (response.statusText === "OK") {
@@ -63,35 +77,53 @@ class App extends React.Component {
               loading: false
             });
           }
-        });
+        })
+          .catch(e => {
+            this.setState({
+              submit: true,
+              error: e.toString(),
+              loading: false
+            });
+          });
     });
   };
 
+  formToStringEmployment(employment) {
+    return Object.keys(employment)
+        .filter(key => {
+          return employment[key];
+        })
+        .map(key => {
+          switch (key) {
+            case "full":
+              return "полная";
+            case "part":
+              return "частичная";
+            case "project":
+              return "проектная";
+            case "training":
+              return "стажировка";
+            default:
+              return;
+          }
+        })
+        .join(", ");
+  }
+
+  formToStringSalary(from, to) {
+    return `от ${from} до ${to} рублей`;
+  }
+
+  formToStringSkills(skills) {
+    return skills.split(" ").join(", ");
+  }
+
   transformToString(state) {
     let divider = "\n===============\n";
-    let skills = state.skills.split(" ").join(", ");
-    let salary = `от ${state.from} до ${state.to} рублей`;
-    let employment = Object.keys(state.employment)
-      .filter(key => {
-        return state.employment[key];
-      })
-      // eslint-disable-next-line array-callback-return
-      .map(key => {
-        switch (key) {
-          case "full":
-            return "полная";
-          case "part":
-            return "частичная";
-          case "project":
-            return "проектная";
-          case "training":
-            return "стажировка";
-          default:
-            break;
-        }
-      })
-      .join(", ");
-    let message = [
+    let skills = this.formToStringSkills(state.skills);
+    let salary = this.formToStringSalary(state.from, state.to);
+    let employment = this.formToStringEmployment(state.employment);
+    return [
       state.name,
       state.description,
       skills,
@@ -102,8 +134,6 @@ class App extends React.Component {
       salary,
       state.contacts
     ].join(divider);
-
-    return message;
   }
 
   handleChange = name => event => {
@@ -218,7 +248,7 @@ class App extends React.Component {
             </div>
 
             <div className="form-row">
-              <label className="col-sm-3" htmlFor="employment">
+              <label className="col-sm-3" htmlFor="format">
                 Формат работы
               </label>
               <select

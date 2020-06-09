@@ -5,4 +5,12 @@ __pycache__/*
 
 .env
 .coverage
-/venv/
+.coveragerc
+venv/
+htmlcov/
+
+instance/
+
+dist/
+build/
+*.egg-info
