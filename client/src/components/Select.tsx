@@ -1,17 +1,19 @@
 import React, { ReactNode } from 'react';
 import { Select as SelectComponent } from '@chakra-ui/core';
 import FormElementContainer from './FormElementContainer';
-import { TFormData } from '../app/appTypes';
+import { EFormatItem, EFormField, TFormData } from '../app/appTypes';
 import { useFormContext } from 'react-hook-form';
+import { translation } from '../app/appConstants';
 
 interface SelectProps {
-    children: ReactNode
     field: keyof TFormData
+    options: EFormatItem[]
     placeholder?: string
 }
 
 const Select = (props: SelectProps) => {
     const { register } = useFormContext<TFormData>();
+    const titles = translation[EFormField.format];
 
     return (
         <FormElementContainer
@@ -23,7 +25,13 @@ const Select = (props: SelectProps) => {
                 placeholder={props.placeholder}
                 ref={register}
             >
-                {props.children}
+                {
+                    props.options.map(option => (
+                        <option value={option} key={option}>
+                            {titles[option]}
+                        </option>
+                    ))
+                }
             </SelectComponent>
         </FormElementContainer>
     )

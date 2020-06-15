@@ -50,14 +50,8 @@ const App = () => {
                             <Select
                                 field={EFormField.format}
                                 placeholder={placeholders[EFormField.format]}
-                            >
-                                <option value={EFormatItem.office}>
-                                    {translation[EFormField.format][EFormatItem.office]}
-                                </option>
-                                <option value={EFormatItem.remote}>
-                                    {translation[EFormField.format][EFormatItem.remote]}
-                                </option>
-                            </Select>
+                                options={[EFormatItem.office, EFormatItem.remote]}
+                            />
 
                             <Checkbox
                                 field={EFormField.employment}
