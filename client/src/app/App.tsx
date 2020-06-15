@@ -15,7 +15,16 @@ const App = () => {
     const formMethods = useForm<TFormData>();
 
     const onSubmit = formMethods.handleSubmit((data) => {
-        console.log('submit', data);
+        const formattedData = {...data, [EFormField.employment]: data[EFormField.employment].join(' ')}
+        fetch('/message', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(formattedData)
+        })
+            .then(response => response.json())
+            .then(data => console.log(data))
     })
 
     return (
