@@ -1,21 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, CSSReset, Flex, Heading, Stack, ThemeProvider, } from '@chakra-ui/core';
 import { FormContext, useForm } from 'react-hook-form';
 import Input from '../components/Input';
 import Textarea from '../components/Textarea';
 import Select from '../components/Select';
 import Checkbox from '../components/Checkbox';
-import { EmploymentItems } from './appConstants';
-import { EFormatItem, EFormField, TFormData } from './appTypes';
-import translation from '../translation.json';
+import { EmploymentItems, initModalInfo, translation } from './appConstants';
+import { EFormatItem, EFormField, TFormData, TMessageResponse, TModalInfo } from './appTypes';
 import FormElementContainer from '../components/FormElementContainer';
+import Loader from '../components/Loader';
+import Modal from '../components/Modal';
 
 const App = () => {
-    const { placeholders } = translation;
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [modalInfo, setModalInfo] = useState<TModalInfo>({title: '', message: ''});
+    const [error, setError] = useState<string>('')
+    const { placeholders, modal } = translation;
     const formMethods = useForm<TFormData>();
 
-    const onSubmit = formMethods.handleSubmit((data) => {
+    const handleSubmit = formMethods.handleSubmit((data) => {
         const formattedData = {...data, [EFormField.employment]: data[EFormField.employment].join(' ')}
+        setIsLoading(true)
         fetch('/message', {
             method: 'POST',
             headers: {
@@ -24,19 +29,48 @@ const App = () => {
             body: JSON.stringify(formattedData)
         })
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then((data: TMessageResponse) => {
+                const chatTitle = data.chatTitle ? data.chatTitle : translation.modal.chatPlaceholder;
+                const message = `${modal.message} ${chatTitle}`;
+                setModalInfo({
+                    title: translation.modal.title,
+                    message: message
+                })
+            })
+            .catch((error) => {
+                setError(error.toString());
+                setModalInfo({
+                    title: translation.modal.errorTitle,
+                    message: translation.modal.errorMessage
+                })
+            })
+            .finally(() => setIsLoading(false))
     })
+
+    const handleModalClose = () => {
+        if (!error) {
+            formMethods.reset();
+        }
+        setModalInfo(initModalInfo);
+        setError('');
+    }
 
     return (
         <ThemeProvider>
             <CSSReset />
+            <Loader isLoading={isLoading} />
+            <Modal
+                message={modalInfo.message}
+                title={modalInfo.title}
+                onClose={handleModalClose}
+            />
             <Flex justifyContent='center'>
                 <Box width={['100%', '100%', '75%', '800px']} px='15px' mb='48px'>
                     <Heading textAlign='center' as="h1" m='70px 0'>
                         {translation.title}
                     </Heading>
                     <FormContext {...formMethods}>
-                        <form onSubmit={onSubmit}>
+                        <form onSubmit={handleSubmit}>
                         <Stack spacing={8} shouldWrapChildren={true}>
                             <Input
                                 isRequired={true}

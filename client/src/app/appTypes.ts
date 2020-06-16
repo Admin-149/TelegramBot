@@ -38,6 +38,14 @@ export interface TTranslation {
     labels: {
         [key in EFormField]: string
     },
+    modal: {
+        chatPlaceholder: string
+        close: string
+        errorMessage: string
+        errorTitle: string
+        message: string
+        title: string
+    },
     placeholders: {
         [EFormField.format]: string
         [EFormField.salary]: string
@@ -58,4 +66,13 @@ export interface TFormData {
     [EFormField.salaryFrom]: string
     [EFormField.salaryTo]: string
     [EFormField.skills]: string
+}
+
+export interface TMessageResponse {
+    chatTitle: string
+}
+
+export interface TModalInfo {
+    message: string,
+    title: string,
 }

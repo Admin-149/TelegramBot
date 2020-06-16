@@ -2,7 +2,7 @@ import os
 import sys
 
 from dotenv import load_dotenv
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 from bot.field_iterator import Fields
 import telegram
 
@@ -39,8 +39,10 @@ def create_app(test_config=None):
         print(form, file=sys.stderr)
         bot = telegram.Bot(os.getenv('BOT_KEY'), request=pp)
         message = '\n'.join([field for field in Fields(form)])
+        chat_title = os.getenv('CHAT_TITLE')
         for chat_id in os.getenv('CHAT_ID').replace(',', ' ').split():
             bot.send_message(chat_id, text=message)
-        return message
+        response = {'chatTitle': chat_title}
+        return jsonify(response)
 
     return app

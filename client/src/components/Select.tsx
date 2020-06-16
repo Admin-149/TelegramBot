@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Select as SelectComponent } from '@chakra-ui/core';
 import FormElementContainer from './FormElementContainer';
 import { EFormatItem, EFormField, TFormData } from '../app/appTypes';
