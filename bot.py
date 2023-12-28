@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 import os
-import re
 import sys
-from typing import List
 
 from dotenv import load_dotenv
 from flask import Flask, request, render_template
